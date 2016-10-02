@@ -48,23 +48,31 @@ public class RadialPositions : MonoBehaviour {
             nodes[i].transform.eulerAngles = new Vector3(0, i * angle / count + transform.eulerAngles.y, 0);
         }
 
-        OpenBelt();
+        if (beltIsFixed == true)
+        {
+            StartCoroutine(OpenBelt());
+        }
 
     }
 
 
     //Opening and closing the belt
-    void OpenBelt()
+    IEnumerator OpenBelt()
     {
         
         if (beltIsFixed && !beltIsOpen)
         {
             for (int i = 0; i < nodes.Length; i++)
             {
-                iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", space, "time", 2.0f));
-                iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 45, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad ));
+                iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", space, "time", 1.0f));
+               
             }
             beltIsOpen = true;
+
+            yield return new WaitForSeconds(0.6f);
+            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 45, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad));
+
+           
         }
         if (!beltIsFixed && beltIsOpen)
         {
@@ -76,6 +84,8 @@ public class RadialPositions : MonoBehaviour {
         }
 
     }
+
+   
 
     void TweenBeltAngle(float _angle)
     {
