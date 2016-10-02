@@ -12,9 +12,8 @@ public class HoverBelt : MonoBehaviour {
     public float height;
     public float moveSpeed;
 
-    bool beltIsOpen = false;
-    bool beltPoisitionFixed = false;
-    bool controllerCollide = false;
+    public bool beltPoisitionFixed = false;
+    public bool controllerCollide = false;
 
     // Use this for initialization
     void Start()
@@ -38,7 +37,7 @@ public class HoverBelt : MonoBehaviour {
 
         if(headSet != null)
         {
-            if (beltIsOpen == false)
+            if (beltPoisitionFixed == false)
             {
                 MoveWithHeadSet();
             }
@@ -84,9 +83,8 @@ public class HoverBelt : MonoBehaviour {
     public void ControllerTriggerPressed()
     {
       //  Debug.Log("Trigger Has been Pressed!!");
-      if(beltIsOpen == true)
+      if(beltPoisitionFixed == true)
         {
-            beltIsOpen = false;
             beltPoisitionFixed = false;
         }
 
@@ -96,7 +94,6 @@ public class HoverBelt : MonoBehaviour {
     {
         if (beltPoisitionFixed == false)
         {
-            beltIsOpen = true;
             FixBeltPosition();
         }
     }

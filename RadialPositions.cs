@@ -17,7 +17,8 @@ public class RadialPositions : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
- 
+
+        angle = 0;
 
 		nodes = new GameObject[count];
         nodeIcon = new Transform[count];
@@ -38,25 +39,33 @@ public class RadialPositions : MonoBehaviour {
 	// Update is called once per frame  
 	void Update () {
 
-        beltIsFixed = gameObject.GetComponent<FollowHeadSet>().beltIsFixed;
+        beltIsFixed = gameObject.GetComponent<HoverBelt>().beltPoisitionFixed;
 
         //Attach to the HoverBelt_02 Object
-        for(int i = 0; i < nodes.Length; i++)
+        for (int i = 0; i < nodes.Length; i++)
         {
             nodes[i].transform.position = gameObject.transform.position;
             nodes[i].transform.eulerAngles = new Vector3(0, i * angle / count + transform.eulerAngles.y, 0);
         }
 
-        //Opening and closing the belt
-        if(beltIsFixed && !beltIsOpen)
+        OpenBelt();
+
+    }
+
+
+    //Opening and closing the belt
+    void OpenBelt()
+    {
+        
+        if (beltIsFixed && !beltIsOpen)
         {
-            for(int i = 0; i < nodes.Length; i++)
+            for (int i = 0; i < nodes.Length; i++)
             {
                 iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", space, "time", 2.0f));
             }
             beltIsOpen = true;
         }
-        if(!beltIsFixed && beltIsOpen)
+        if (!beltIsFixed && beltIsOpen)
         {
             for (int i = 0; i < nodes.Length; i++)
             {
@@ -65,7 +74,6 @@ public class RadialPositions : MonoBehaviour {
             beltIsOpen = false;
         }
 
-	}
-    
+    }
 
 }
