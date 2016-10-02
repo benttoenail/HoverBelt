@@ -11,6 +11,7 @@ public class HoverBelt : MonoBehaviour {
 
     public float height;
     public float moveSpeed;
+    public float beltAngle;
 
     public bool beltPoisitionFixed = false;
     public bool controllerCollide = false;
@@ -51,7 +52,7 @@ public class HoverBelt : MonoBehaviour {
     {
         beltPosition = new Vector3(headSet.transform.position.x, headSet.transform.position.y + height, headSet.transform.position.z);
         gameObject.transform.position = Vector3.Lerp(transform.position, beltPosition, Time.deltaTime * moveSpeed);
-        beltRotation = Quaternion.Euler(new Vector3(0, headSet.transform.eulerAngles.y - 90, 0));
+        beltRotation = Quaternion.Euler(new Vector3(0, headSet.transform.eulerAngles.y - beltAngle, 0));
         transform.rotation = Quaternion.Slerp(transform.rotation, beltRotation, Time.deltaTime * moveSpeed);
     }
 
@@ -62,7 +63,7 @@ public class HoverBelt : MonoBehaviour {
         Debug.Log("Fixing the belt position");
         beltPosition = new Vector3(headSet.transform.position.x, headSet.transform.position.y + height, headSet.transform.position.z);
         gameObject.transform.position = Vector3.Lerp(transform.position, beltPosition, Time.deltaTime * moveSpeed);
-        beltRotation = Quaternion.Euler(new Vector3(0, headSet.transform.eulerAngles.y - 90, 0));
+        beltRotation = Quaternion.Euler(new Vector3(0, headSet.transform.eulerAngles.y - beltAngle, 0));
         transform.rotation = Quaternion.Slerp(transform.rotation, beltRotation, Time.deltaTime * moveSpeed);
 
         beltPoisitionFixed = true;

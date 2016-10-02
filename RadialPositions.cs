@@ -75,7 +75,7 @@ public class RadialPositions : MonoBehaviour {
             beltIsOpen = true;
 
             yield return new WaitForSeconds(0.6f);
-            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", angularSpace, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad));
+            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", angularSpace, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeInOutQuad));
         }
 
     }
@@ -85,13 +85,13 @@ public class RadialPositions : MonoBehaviour {
     {
         if (!beltIsFixed && beltIsOpen)
         {
-            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 0, "time", 0.5f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad));
+            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 0, "time", 0.5f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeInOutQuad));
             beltIsOpen = false;
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(0.35f);
 
             for (int i = 0; i < nodes.Length; i++)
             {
-                iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", -space, "time", 1.0f));
+                iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", -space, "time", 0.5f, "easetype", iTween.EaseType.easeInQuad));
             }
             
         }
