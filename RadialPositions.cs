@@ -6,6 +6,7 @@ public class RadialPositions : MonoBehaviour {
 	public int count;
     public float angle; //Radial distance between buttons
     public float space = 1.0f; //Distance from user
+    public float angularSpace;
 
 	public GameObject radialCube;
 	GameObject[] nodes;
@@ -52,11 +53,15 @@ public class RadialPositions : MonoBehaviour {
         {
             StartCoroutine(OpenBelt());
         }
+        if(beltIsFixed == false)
+        {
+            StartCoroutine(CloseBelt());
+        }
 
     }
 
 
-    //Opening and closing the belt
+    //OPENING / CLOSING BELT ANIMATIONS
     IEnumerator OpenBelt()
     {
         
@@ -70,21 +75,27 @@ public class RadialPositions : MonoBehaviour {
             beltIsOpen = true;
 
             yield return new WaitForSeconds(0.6f);
-            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 45, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad));
-
-           
-        }
-        if (!beltIsFixed && beltIsOpen)
-        {
-            for (int i = 0; i < nodes.Length; i++)
-            {
-                iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", -space, "time", 2.0f));
-            }
-            beltIsOpen = false;
+            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", angularSpace, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad));
         }
 
     }
 
+
+    IEnumerator CloseBelt()
+    {
+        if (!beltIsFixed && beltIsOpen)
+        {
+            iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 0, "time", 0.5f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad));
+            beltIsOpen = false;
+            yield return new WaitForSeconds(0.7f);
+
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", -space, "time", 1.0f));
+            }
+            
+        }
+    }
    
 
     void TweenBeltAngle(float _angle)
