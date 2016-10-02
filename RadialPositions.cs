@@ -9,7 +9,9 @@ public class RadialPositions : MonoBehaviour {
     public float angularSpace;
 
 	public GameObject radialCube;
-	GameObject[] nodes;
+    public Material beltMat;
+
+    GameObject[] nodes;
     Transform[] nodeIcon;
 	Quaternion q;
 
@@ -50,7 +52,7 @@ public class RadialPositions : MonoBehaviour {
         }
 
         if (beltIsFixed == true)
-        {
+        {   
             StartCoroutine(OpenBelt());
         }
         if(beltIsFixed == false)
@@ -64,7 +66,7 @@ public class RadialPositions : MonoBehaviour {
     //OPENING / CLOSING BELT ANIMATIONS
     IEnumerator OpenBelt()
     {
-        
+        StartCoroutine(FadeTo(1.0f, 1.0f));
         if (beltIsFixed && !beltIsOpen)
         {
             for (int i = 0; i < nodes.Length; i++)
@@ -74,7 +76,7 @@ public class RadialPositions : MonoBehaviour {
             }
             beltIsOpen = true;
 
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.25f);
             iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", angularSpace, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeInOutQuad));
         }
 
@@ -83,6 +85,7 @@ public class RadialPositions : MonoBehaviour {
 
     IEnumerator CloseBelt()
     {
+        StartCoroutine(FadeTo(0.0f, 0.1f));
         if (!beltIsFixed && beltIsOpen)
         {
             iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 0, "time", 0.5f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeInOutQuad));
@@ -101,6 +104,19 @@ public class RadialPositions : MonoBehaviour {
     void TweenBeltAngle(float _angle)
     {
         angle = _angle;
+    }
+
+
+    //Fade Alpha Channel on belt icons
+    IEnumerator FadeTo(float aValue, float aTime)
+    {
+        float alpha = beltMat.color.a;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+        {
+            Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, aValue, t));
+            beltMat.color = newColor;
+            yield return null;
+        }
     }
 
 }
