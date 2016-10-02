@@ -72,6 +72,7 @@ public class RadialPositions : MonoBehaviour {
             for (int i = 0; i < nodes.Length; i++)
             {
                 iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", space, "time", 1.0f));
+                iTween.RotateBy(nodeIcon[i].gameObject, iTween.Hash("z", -0.1f, "delay", 1.0f));
                
             }
             beltIsOpen = true;
@@ -88,12 +89,17 @@ public class RadialPositions : MonoBehaviour {
         StartCoroutine(FadeTo(0.0f, 0.1f));
         if (!beltIsFixed && beltIsOpen)
         {
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                iTween.RotateBy(nodeIcon[i].gameObject, iTween.Hash("z", 0.1f, "delay", 0.0f));
+            }
+
             iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 0, "time", 0.5f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeInOutQuad));
             beltIsOpen = false;
             yield return new WaitForSeconds(0.35f);
 
             for (int i = 0; i < nodes.Length; i++)
-            {
+            {  
                 iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", -space, "time", 0.5f, "easetype", iTween.EaseType.easeInQuad));
             }
             
