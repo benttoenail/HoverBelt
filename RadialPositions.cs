@@ -62,6 +62,7 @@ public class RadialPositions : MonoBehaviour {
             for (int i = 0; i < nodes.Length; i++)
             {
                 iTween.MoveBy(nodeIcon[i].gameObject, iTween.Hash("x", space, "time", 2.0f));
+                iTween.ValueTo(gameObject, iTween.Hash("from", angle, "to", 45, "time", 1.0f, "onupdate", "TweenBeltAngle", "easetype", iTween.EaseType.easeOutQuad ));
             }
             beltIsOpen = true;
         }
@@ -74,6 +75,11 @@ public class RadialPositions : MonoBehaviour {
             beltIsOpen = false;
         }
 
+    }
+
+    void TweenBeltAngle(float _angle)
+    {
+        angle = _angle;
     }
 
 }
