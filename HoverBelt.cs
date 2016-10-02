@@ -47,9 +47,8 @@ public class HoverBelt : MonoBehaviour {
     }
 
 
-
     //When Belt is not locked in placeS
-    MoveWithHeadSet();
+    void MoveWithHeadSet()
     {
         beltPosition = new Vector3(headSet.transform.position.x, headSet.transform.position.y + height, headSet.transform.position.z);
         gameObject.transform.position = Vector3.Lerp(transform.position, beltPosition, Time.deltaTime * moveSpeed);
@@ -71,7 +70,7 @@ public class HoverBelt : MonoBehaviour {
     }
 
 
-    //EVENTS
+    //SUBCSCRIBED EVENTS
     public void ControllerEntered()
     {
        // Debug.Log("Controller has ENTERED the building!");
