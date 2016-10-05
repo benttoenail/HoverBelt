@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RadialPositions : MonoBehaviour {
+public class BeltControl : MonoBehaviour {
 
 	public int count;
     public float angle; //Radial distance between buttons
@@ -42,7 +42,7 @@ public class RadialPositions : MonoBehaviour {
 	// Update is called once per frame  
 	void Update () {
 
-        beltIsFixed = gameObject.GetComponent<HoverBelt>().beltPoisitionFixed;
+        beltIsFixed = gameObject.GetComponent<HoverBelt>().beltPoisitionFixed; //Has belt been opened?
 
         //Attach to the HoverBelt_02 Object
         for (int i = 0; i < nodes.Length; i++)
@@ -106,7 +106,7 @@ public class RadialPositions : MonoBehaviour {
         }
     }
    
-
+    //For tweening the angle float value
     void TweenBeltAngle(float _angle)
     {
         angle = _angle;

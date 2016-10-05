@@ -62,7 +62,7 @@ public class ControllerEvents : MonoBehaviour {
             //When Trigger is Released
             if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger)) //This is not finding the controller object??
             {
-                ControllerTriggerUp();
+                //ControllerTriggerUp();
             }
         }
     }
@@ -127,7 +127,7 @@ public class ControllerEvents : MonoBehaviour {
     //Collision Detection
     void OnTriggerEnter(Collider ring)
     {
-        if (controllerIsIntersecting == false)
+        if (controllerIsIntersecting == false && ring.gameObject.name == "CollisionCube")
         {
             ControllerEntered();
             controllerIsIntersecting = true;

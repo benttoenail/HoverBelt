@@ -25,6 +25,7 @@ public class HoverBelt : MonoBehaviour {
             Debug.Log("HEADSET NOT FOUND YOU WHORE!!");
         }
 
+        //Subscribe to ControllerEvents script
         ControllerEvents.ControllerEntered += ControllerEntered;
         ControllerEvents.ControllerExited += ControllerExited;
         ControllerEvents.ControllerTriggerPressed += ControllerTriggerPressed;
