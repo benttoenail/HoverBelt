@@ -8,12 +8,13 @@ public class BeltControl : MonoBehaviour {
     public float space = 1.0f; //Distance from user
     public float angularSpace;
 
-	public GameObject radialCube;
+	public GameObject beltIcon;
     public Material beltMat;
 
-    GameObject[] nodes;
-    Transform[] nodeIcon;
+    GameObject[] nodes; // setting the angle for the icon objects
+    Transform[] nodeIcon; // objects to be moved
 	Quaternion q;
+    //public GameObject[] array = new GameObject[5];
 
     bool beltIsFixed;
     bool beltIsOpen = false;
@@ -29,12 +30,24 @@ public class BeltControl : MonoBehaviour {
 		
         //Rotate and instantiate Object
 		for(int i = 0; i < count; i++){
-
-			q.eulerAngles = new Vector3(0, i * angle / count, 0); //set radial angle
-			temp = Instantiate(radialCube, new Vector3(0,0,0), q) as GameObject;
-            nodes[i] = temp;
+            
+            //Set angle - instatiate prefab - create null rotation - parent icon to rotAngle - push into nodes array
+			q.eulerAngles = new Vector3(0, i * angle / count, 0);                  
+            if(beltIcon == null)
+            {
+                Debug.LogError("You forgot to add a tool to the belt!");
+            }
+            else
+            {
+                temp = Instantiate(beltIcon, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+            }                                           
+            
+            GameObject rotAngle = new GameObject();
+            temp.transform.SetParent(rotAngle.transform);
+            rotAngle.transform.rotation = q;
+            nodes[i] = rotAngle;
             nodeIcon[i] = nodes[i].transform.GetChild(0);
-            //nodes[i].transform.SetParent(gameObject.transform); //For some reason parenting the HoverBelt_02 is not working??
+           
         }
 
 	}
@@ -63,7 +76,7 @@ public class BeltControl : MonoBehaviour {
     }
 
 
-    //OPENING / CLOSING BELT ANIMATIONS
+    //OPENING / CLOSING BELT ANIMATIONS\\
     IEnumerator OpenBelt()
     {
         StartCoroutine(FadeTo(1.0f, 1.0f));
