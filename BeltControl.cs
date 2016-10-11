@@ -3,18 +3,18 @@ using System.Collections;
 
 public class BeltControl : MonoBehaviour {
 
-	public int count;
+	private int count;
     public float angle; //Radial distance between buttons
     public float space = 1.0f; //Distance from user
     public float angularSpace;
 
-	public GameObject beltIcon;
+	//public GameObject beltIcon;
     public Material beltMat;
 
     GameObject[] nodes; // setting the angle for the icon objects
     Transform[] nodeIcon; // objects to be moved
 	Quaternion q;
-    //public GameObject[] array = new GameObject[5];
+    public GameObject[] beltIcon = new GameObject[0];
 
     bool beltIsFixed;
     bool beltIsOpen = false;
@@ -24,10 +24,12 @@ public class BeltControl : MonoBehaviour {
 
         angle = 0;
 
-		nodes = new GameObject[count];
+        count = beltIcon.Length;
+
+        nodes = new GameObject[count];
         nodeIcon = new Transform[count];
 		GameObject temp = new GameObject();
-		
+
         //Rotate and instantiate Object
 		for(int i = 0; i < count; i++){
             
@@ -39,7 +41,7 @@ public class BeltControl : MonoBehaviour {
             }
             else
             {
-                temp = Instantiate(beltIcon, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                temp = Instantiate(beltIcon[i], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
             }                                           
             
             GameObject rotAngle = new GameObject();
